@@ -4,9 +4,9 @@ on: [push, workflow_dispatch]
 jobs:
   build:
     strategy:
-      fail-fast: false  # Ensures other versions finish if one (like 5.7) fails
+      fail-fast: false
       matrix:
-        # Building for the full range of UE5 versions in the cloud
+        # Building for every UE5 version in the cloud
         ue_version: ["5.0", "5.1", "5.2", "5.3", "5.4", "5.5", "5.6", "5.7"]
     
     runs-on: windows-latest
@@ -16,11 +16,10 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Build Plugin
-        # Updated to reference the 'main' branch of the builder
+        # We use @main here to match the current default branch
         uses: Guganana/UnrealCodeBuilder@main 
         with:
           version: ${{ matrix.ue_version }}
-          # Path to your uplugin in the root of your 'main' branch
           uplugin_path: "LG_FrameGenHelper.uplugin"
 
       - name: Upload Binaries
