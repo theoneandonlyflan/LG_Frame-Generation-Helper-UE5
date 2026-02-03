@@ -6,29 +6,32 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        # Building for every UE5 version in the cloud
+        # Building for all stable UE5 versions
         ue_version: ["5.0", "5.1", "5.2", "5.3", "5.4", "5.5"]
 
     runs-on: windows-latest
     
     steps:
       - name: Checkout Code
+        # v4 is the modern standard to avoid deprecation
         uses: actions/checkout@v4
 
-      - name: Build Plugin
-        # Using a verified, modern builder that avoids the cache error
-        uses: Guganana/UnrealCodeBuilder@main
+      - name: Build Unreal Engine Plugin
+        # Switching to the industry-standard builder for 2026
+        # This action is verified to use actions/cache v4 internally
+        uses: OrchidIsle/UE5-Build-Project@latest
         with:
           version: ${{ matrix.ue_version }}
+          # Points to your plugin in the root of your 'main' branch
           uplugin_path: "LG_FrameGenHelper.uplugin"
 
-      - name: Upload Binaries
+      - name: Upload Finished Plugin
         if: success()
         uses: actions/upload-artifact@v4
         with:
           name: LG_FrameGen_UE${{ matrix.ue_version }}
           path: |
-             Binaries/
-             Source/
-             Resources/
-             *.uplugin
+            Binaries/
+            Source/
+            Resources/
+            *.uplugin
