@@ -1,0 +1,7 @@
+{
+	"OutputFiles": [
+		"..\\..\\..\\x64\\UnrealGame\\Shipping\\LGFrameGenHelper\\Module.LGFrameGenHelper.cpp.obj",
+		"..\\..\\..\\x64\\UnrealGame\\Shipping\\LGFrameGenHelper\\LGFrameGenHelper.cpp.obj",
+		"..\\..\\..\\x64\\UnrealGame\\Shipping\\LGFrameGenHelper\\LGFrameGenHelperBPLibrary.cpp.obj"
+	]
+}

@@ -1,0 +1,15 @@
+[SystemSettings]
+r.XeFG.OverrideSwapChain=0
+r.Streamline.Load.DLSSG=0
+r.XeFG.OverrideSwapChain=0
+r.FidelityFX.FI.AllowAsyncWorkloads=1
+
+[RuntimeConsoleVariables]
+r.Streamline.DLSSG.Enable=1
+r.FidelityFX.FI.Enabled=1
+r.FidelityFX.FSR3.Enabled=1
+r.XeFG.Enabled=1
+
+[SectionsToSave]
++Section=SystemSettings
+bCanSaveAllSections=true
