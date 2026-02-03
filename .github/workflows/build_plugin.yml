@@ -4,8 +4,9 @@ on: [push, pull_request]
 jobs:
   build:
     strategy:
+      fail-fast: false  # Prevents one failed version from stopping the rest
       matrix:
-        # This builds your plugin for all versions at once!
+        # Full UE5 suite
         ue_version: ["5.0", "5.1", "5.2", "5.3", "5.4", "5.5", "5.6", "5.7"]
     
     runs-on: windows-latest
@@ -15,20 +16,19 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Build Plugin for ${{ matrix.ue_version }}
-        # This action finds the engine and runs RunUAT automatically
-        uses: Guganana/UnrealCodeBuilder@v1
+        # Use the master branch if a specific tag like v1 is missing
+        uses: Guganana/UnrealCodeBuilder@master 
         with:
           version: ${{ matrix.ue_version }}
-          # Path to your .uplugin file
           uplugin_path: "LG_FrameGenHelper.uplugin"
 
       - name: Upload Binaries
+        if: success() # Only upload if the build step actually worked
         uses: actions/upload-artifact@v4
         with:
           name: LG_FrameGen_UE${{ matrix.ue_version }}
           path: |
             Binaries/
-            Intermediate/
             Source/
             Resources/
             *.uplugin
