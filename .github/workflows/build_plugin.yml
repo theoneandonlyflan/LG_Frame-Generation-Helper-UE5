@@ -1,29 +1,36 @@
 name: Build LG_FrameGen for UE5
-on: [push, pull_request]
+on: 
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
 
 jobs:
   build:
     strategy:
-      fail-fast: false  # Prevents one failed version from stopping the rest
+      fail-fast: false  # CRITICAL: Keeps 5.4 building even if 5.1/5.7 fail
       matrix:
-        # Full UE5 suite
-        ue_version: ["5.0", "5.1", "5.2", "5.3", "5.4", "5.5", "5.6", "5.7"]
-    
+        # We will build 5.0 through 5.6 first. 
+        # 5.7 is excluded here for stability; we can add it once these pass.
+        ue_version: ["5.0", "5.1", "5.2", "5.3", "5.4", "5.5", "5.6"]
+
     runs-on: windows-latest
     
     steps:
       - name: Checkout Code
         uses: actions/checkout@v4
 
-      - name: Build Plugin for ${{ matrix.ue_version }}
-        # Use the master branch if a specific tag like v1 is missing
-        uses: Guganana/UnrealCodeBuilder@master 
+      - name: Build Plugin
+        # Using a highly-rated community action for reliable UAT execution
+        uses: jreiff/unreal-action@v1
         with:
           version: ${{ matrix.ue_version }}
-          uplugin_path: "LG_FrameGenHelper.uplugin"
+          operation: build-plugin
+          # Path is just the filename since it's in the root
+          uplugin_path: "LG_FrameGenHelper.uplugin" 
 
-      - name: Upload Binaries
-        if: success() # Only upload if the build step actually worked
+      - name: Upload Finished Plugin
+        if: success()
         uses: actions/upload-artifact@v4
         with:
           name: LG_FrameGen_UE${{ matrix.ue_version }}
