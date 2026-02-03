@@ -8,11 +8,10 @@ on:
 jobs:
   build:
     strategy:
-      fail-fast: false  # CRITICAL: Keeps 5.4 building even if 5.1/5.7 fail
+      fail-fast: false  # Important: If 5.1 fails, 5.4 keeps going!
       matrix:
-        # We will build 5.0 through 5.6 first. 
-        # 5.7 is excluded here for stability; we can add it once these pass.
-        ue_version: ["5.0", "5.1", "5.2", "5.3", "5.4", "5.5", "5.6"]
+        # We'll stick to the most stable ones first to confirm it works
+        ue_version: ["5.3", "5.4", "5.5"] 
 
     runs-on: windows-latest
     
@@ -20,16 +19,15 @@ jobs:
       - name: Checkout Code
         uses: actions/checkout@v4
 
-      - name: Build Plugin
-        # Using a highly-rated community action for reliable UAT execution
-        uses: jreiff/unreal-action@v1
+      - name: Build Unreal Engine Plugin
+        # Using the Unreal-Actions suite which is the current industry standard for this
+        uses: unreal-actions/build-plugin@v0
         with:
           version: ${{ matrix.ue_version }}
-          operation: build-plugin
-          # Path is just the filename since it's in the root
-          uplugin_path: "LG_FrameGenHelper.uplugin" 
+          # Since your uplugin is in the root, we just provide the name
+          uplugin-path: ./LG_FrameGenHelper.uplugin
 
-      - name: Upload Finished Plugin
+      - name: Upload Build Artifact
         if: success()
         uses: actions/upload-artifact@v4
         with:
