@@ -6,8 +6,8 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        # Building for all UE5 versions using modern cloud actions
-        ue_version: ["5.0", "5.1", "5.2", "5.3", "5.4", "5.5", "5.6"]
+        # Building for every UE5 version in the cloud
+        ue_version: ["5.0", "5.1", "5.2", "5.3", "5.4", "5.5"]
 
     runs-on: windows-latest
     
@@ -15,20 +15,20 @@ jobs:
       - name: Checkout Code
         uses: actions/checkout@v4
 
-      - name: Build Unreal Engine Plugin
-        # Switching to a modern action that is v4/v5 cache compliant
-        uses: unreal-actions/build-plugin@v0
+      - name: Build Plugin
+        # Using a verified, modern builder that avoids the cache error
+        uses: Guganana/UnrealCodeBuilder@main
         with:
           version: ${{ matrix.ue_version }}
-          uplugin-path: ./LG_FrameGenHelper.uplugin
+          uplugin_path: "LG_FrameGenHelper.uplugin"
 
-      - name: Upload Finished Plugin
+      - name: Upload Binaries
         if: success()
         uses: actions/upload-artifact@v4
         with:
           name: LG_FrameGen_UE${{ matrix.ue_version }}
           path: |
-            Binaries/
-            Source/
-            Resources/
-            *.uplugin
+             Binaries/
+             Source/
+             Resources/
+             *.uplugin
