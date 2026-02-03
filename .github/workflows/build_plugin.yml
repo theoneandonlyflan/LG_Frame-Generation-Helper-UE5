@@ -1,0 +1,34 @@
+name: Build LG_FrameGen for UE5
+on: [push, pull_request]
+
+jobs:
+  build:
+    strategy:
+      matrix:
+        # This builds your plugin for all versions at once!
+        ue_version: ["5.0", "5.1", "5.2", "5.3", "5.4", "5.5", "5.6", "5.7"]
+    
+    runs-on: windows-latest
+    
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Build Plugin for ${{ matrix.ue_version }}
+        # This action finds the engine and runs RunUAT automatically
+        uses: Guganana/UnrealCodeBuilder@v1
+        with:
+          version: ${{ matrix.ue_version }}
+          # Path to your .uplugin file
+          uplugin_path: "LG_FrameGenHelper.uplugin"
+
+      - name: Upload Binaries
+        uses: actions/upload-artifact@v4
+        with:
+          name: LG_FrameGen_UE${{ matrix.ue_version }}
+          path: |
+            Binaries/
+            Intermediate/
+            Source/
+            Resources/
+            *.uplugin
