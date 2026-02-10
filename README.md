@@ -29,3 +29,10 @@ This plugin implements the functionality of switching Frame Generation technolog
 <img width="1551" height="638" alt="image" src="https://github.com/user-attachments/assets/fc5f7e43-9180-494c-8eed-01dd5bc8d1e0" />
 
 **8.** Test within standalone or a packaged project. Select the Method and call the Set Frame Generation Method function and restart and then the selected Frame Generation will be avaliable and Swapchain is provided. (Note: You must implement the functionality of the Frame Generation Tech outside of this plugin)
+
+
+# Buy Me A Cuppa Tea
+
+If this plugin has helped you and you would wish to donate some money to buy me a cup of tea follow the link below.
+
+https://buymeacoffee.com/libgamesflan
