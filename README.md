@@ -1,5 +1,6 @@
 # Liberation Games Frame Generation Helper
 This plugin implements the functionality of switching Frame Generation technologies on restart with one function.
+
 (Developed in Unreal Engine 5.5.4)
 
 <img width="128" height="128" alt="Icon128" src="https://github.com/user-attachments/assets/d32ac410-0138-437d-9235-b7793dc36ac0" />
