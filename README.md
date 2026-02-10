@@ -10,7 +10,7 @@ This plugin implements the functionality of switching Frame Generation technolog
 
 **How to**
 
-**1.** Download the latest release. (This download has Unreal Engine Versions from 5.4 to 5.7)
+**1.** Download the latest release from the Releases Tab. (This download has Unreal Engine Versions from 5.4 to 5.7)
 
 **2.** Select the folder based on the project's engine version (Example: LGFrameGenHelper_UE_5_5 for Unreal Engine 5.5)
 
